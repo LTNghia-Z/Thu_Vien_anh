@@ -1,0 +1,130 @@
+/* ========================================================
+   1. CHẾ ĐỘ MẶC ĐỊNH / DI ĐỘNG (MOBILE FIRST)
+   - Lưới 1 cột với khoảng cách 10px giữa các hàng và cột
+   ======================================================== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 16px;
+  background-color: #f8f9fa;
+  color: #212529;
+}
+
+header,
+footer {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* Lưới 1 cột, gap 10px */
+.gallery-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.gallery-item {
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery-item p {
+  margin-top: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ========================================================
+   2. TRUY VẤN #1: MÁY TÍNH BẢNG (TABLET - min-width: 772px)
+   - Lưới 2 cột
+   - Bo tròn hình ảnh (border-radius)
+   - Phần tử con cuối cùng chiếm cả 2 cột
+   ======================================================== */
+@media screen and (min-width: 772px) {
+  .gallery-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery-item img {
+    border-radius: 50%;
+  }
+
+  .gallery-item:last-child {
+    grid-column: span 2;
+  }
+}
+
+/* ========================================================
+   3. TRUY VẤN #2: MÀN HÌNH LỚN (DESKTOP - min-width: 992px)
+   - Không lặp lại các quy tắc không cần thiết
+   - Xóa bán kính đường viền khỏi hình ảnh
+   - Mỗi phần tử thứ 3 (3, 6, 9,...) chiếm cả 2 cột
+   - Không sử dụng max-width
+   ======================================================== */
+@media screen and (min-width: 992px) {
+  /* Hủy bỏ thuộc tính span của phần tử cuối cùng ở tablet */
+  .gallery-item:last-child {
+    grid-column: auto;
+  }
+
+  /* Mỗi phần tử con thứ 3 chiếm 2 cột */
+  .gallery-item:nth-child(3n) {
+    grid-column: span 2;
+  }
+
+  /* Xóa border-radius khỏi tất cả ảnh */
+  .gallery-item img {
+    border-radius: 0;
+  }
+}
+
+/* ========================================================
+   4. TRUY VẤN #3: GIẢM CHUYỂN ĐỘNG (prefers-reduced-motion)
+   - Tắt hành vi cuộn mượt
+   ======================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ========================================================
+   5. TRUY VẤN #4: BẢNG MÀU TỐI (prefers-color-scheme: dark)
+   - Nền tối cho các hình / khối
+   - Chữ màu vàng nhạt (tương phản chuẩn accessibility)
+   - Viền màu đen
+   ======================================================== */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #fff9c4;
+  }
+
+  .gallery-item {
+    background-color: #1e1e1e;
+    color: #fff9c4;
+    border: 2px solid #000000;
+  }
+
+  .gallery-item p {
+    color: #fff9c4;
+  }
+}
